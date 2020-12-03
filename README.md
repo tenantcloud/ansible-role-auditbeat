@@ -1,3 +1,6 @@
+![Ansible Lint](https://github.com/tenantcloud/ansible-role-auditbeat/workflows/Ansible%20Lint/badge.svg?branch-master)
+![Yaml Lint](https://github.com/tenantcloud/ansible-role-auditbeat/workflows/Yaml%20Lint/badge.svg?branch-master)
+
 tenantcloud.auditbeat
 =========
 
@@ -9,6 +12,7 @@ Requirements
 Role Variables
 --------------
 
+ansible_user: ubuntu
 elk_url: localhost
 elk_username: username
 elk_password: password

@@ -2,8 +2,10 @@
 galaxy_info:
   role_name: auditbeat
   author: Oleh Debretseni
-  description: install Auditbeat on testing servers
+  description: Install Auditbeat on testing servers
   company: "TenantCloud LLC"
+
+  issue_tracker_url: https://github.com/tenantcloud/auditbeat/issues
 
   license: BSD
 
