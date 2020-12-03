@@ -1,0 +1,26 @@
+---
+galaxy_info:
+  role_name: auditbeat
+  author: Oleh Debretseni
+  description: install Auditbeat on testing servers
+  company: "TenantCloud LLC"
+
+  license: BSD
+
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+
+  galaxy_tags:
+    - auditbeat
+    - elk
+    - tenantcloud

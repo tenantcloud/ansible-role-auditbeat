@@ -1,0 +1,36 @@
+---
+- name: Add Elastic GPG Key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add Elastic {{ elasticsearch_version }} repository
+  apt_repository:
+    repo: "{{ elasic_repo }}/{{ elasticsearch_version }}/apt stable main"
+    state: present
+    update_cache: true
+
+- name: Stop auditbeat
+  service:
+    name: auditbeat
+    state: stopped
+  ignore_errors: true
+
+- name: Install auditbeat
+  apt:
+    name: "auditbeat={{ release_version }}"
+  notify:
+    - Stop auditbeat
+
+- name: Enable auditbeat
+  service:
+    name: auditbeat
+    enabled: true
+
+- name: Add auditbeat configuration file
+  template:
+    src: 'etc/auditbeat/auditbeat.yml.j2'
+    dest: '/etc/auditbeat/auditbeat.yml'
+    mode: 0600
+  notify:
+    - Start auditbeat

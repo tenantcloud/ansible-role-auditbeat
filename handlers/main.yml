@@ -1,0 +1,15 @@
+---
+- name: Stop auditbeat
+  service:
+    name: auditbeat
+    state: stopped
+
+- name: Start auditbeat
+  service:
+    name: auditbeat
+    state: started
+
+- name: Restart auditbeat
+  service:
+    name: auditbeat
+    state: restarted
