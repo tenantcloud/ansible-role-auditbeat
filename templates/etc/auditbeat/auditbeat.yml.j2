@@ -38,27 +38,45 @@ auditbeat.modules:
 
     ## Unauthorized access attempts.
     #-a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EACCES -k access
-    -a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EPERM -k access
+    #-a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EPERM -k access
 
-    ## Log all processes executed
-    -a always,exit -S execve,execveat
+    ## Log all cmd processes executed sudo users in terminal
+    -a exit,always -F euid>=1000 -F arch=b32 -S execve,execveat -k auditcmd
+    -a exit,always -F euid>=1000 -F arch=b64 -S execve,execveat -k auditcmd
+    -a exclude,always -F msgtype=SERVICE_START
+    -a exclude,always -F msgtype=SERVICE_STOP
+    -a exclude,always -F msgtype=CONFIG_CHANGE
+    -a exclude,always -F msgtype=USER_LOGIN
+    -a exclude,always -F msgtype=USER_AUTH
+    -a exclude,always -F msgtype=USER_END
+    -a exclude,always -F msgtype=USER_START
+    -a exclude,always -F msgtype=USER_ACCT
+    -a exclude,always -F msgtype=USER_CMD
+    -a exclude,always -F msgtype=SECCOMP
+    -a exclude,always -F msgtype=NETFILTER_CFG
+    -a exclude,always -F msgtype=CRED_DISP
+    -a exclude,always -F msgtype=CRED_REFR
+    -a exclude,always -F msgtype=CRED_ACQ
+    -a exclude,always -F msgtype=ANOM_PROMISCUOUS
 
-#- module: file_integrity
-#  paths:
-  #- /bin
-  #- /usr/bin
-  #- /sbin
-  #- /usr/sbin
-  #- /etc
+- module: file_integrity
+  paths:
+  - /bin
+  - /usr/bin
+  - /sbin
+  - /usr/sbin
+  - /etc
+  enabled: false
 
 - module: system
   datasets:
     - host    # General host information, e.g. uptime, IPs
     - login   # User logins, logouts, and system boots.
     - package # Installed, updated, and removed packages
-   # - process # Started and stopped processes
-   # - socket  # Opened and closed sockets
-   # - user    # User information
+    - process # Started and stopped processes
+    - socket  # Opened and closed sockets
+    - user    # User information
+   enabled: false
 
   # How often datasets send state updates with the
   # current state of the system (e.g. all currently
