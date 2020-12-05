@@ -52,6 +52,7 @@ auditbeat.modules:
     -a exclude,always -F msgtype=USER_START
     -a exclude,always -F msgtype=USER_ACCT
     -a exclude,always -F msgtype=USER_CMD
+    -a exclude,always -F msgtype=USER_ERR
     -a exclude,always -F msgtype=SECCOMP
     -a exclude,always -F msgtype=NETFILTER_CFG
     -a exclude,always -F msgtype=CRED_DISP
