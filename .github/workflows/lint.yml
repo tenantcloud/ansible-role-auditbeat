@@ -1,17 +1,17 @@
 ---
-name: Ansible Lint
+name: Lint Ansible Playbook
 on: [push, pull_request]    # yamllint disable-line rule:truthy
 jobs:
-  build:
+  Ansible-Lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Lint Ansible Playbook
+      - name: ansible-Lint
         uses: ansible/ansible-lint-action@151b9a2
         with:
           targets: "./"
           args: -x 106
-  lintAllTheThings:
+  Yaml-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
