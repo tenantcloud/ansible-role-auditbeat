@@ -11,6 +11,12 @@
 auditbeat.modules:
 
 - module: auditd
+  ## Drop tty(none) user session.
+  processors:
+    - drop_event:
+        when:
+          contains:
+            auditd.data.tty: "(none)"
 
   # Load audit rules from separate files. Same format as audit.rules(7).
   audit_rule_files: [ '${path.config}/audit.rules.d/*.conf' ]
@@ -32,17 +38,22 @@ auditbeat.modules:
     #-a always,exit -F arch=b64 -S accept,bind,connect -F key=external-access
 
     ## Identity changes.
-    #-w /etc/group -p wa -k identity
-    #-w /etc/passwd -p wa -k identity
-    #-w /etc/gshadow -p wa -k identity
+    -w /etc/group -p wa -k identity
+    -w /etc/passwd -p wa -k identity
+    -w /etc/gshadow -p wa -k identity
+    -w /etc/shadow -p wa -k identity
 
     ## Unauthorized access attempts.
     #-a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EACCES -k access
     #-a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EPERM -k access
 
-    ## Log all cmd processes executed sudo users in terminal
-    -a exit,always -F euid>=1000 -F arch=b32 -S execve,execveat -k auditcmd
-    -a exit,always -F euid>=1000 -F arch=b64 -S execve,execveat -k auditcmd
+    ## Log all commands executed by users in the terminal
+    -a exit,always -F arch=b64 -F euid=0 -S execve -k rootact
+    -a exit,always -F arch=b32 -F euid=0 -S execve -k rootact
+    -a exit,always -F arch=b64 -F euid>=1000 -S execve -k useract
+    -a exit,always -F arch=b32 -F euid>=1000 -S execve -k useract
+
+    ## Drop all msgtype excluding msgtype=SYSCALL
     -a exclude,always -F msgtype=SERVICE_START
     -a exclude,always -F msgtype=SERVICE_STOP
     -a exclude,always -F msgtype=CONFIG_CHANGE
