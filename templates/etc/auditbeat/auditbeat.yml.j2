@@ -53,14 +53,10 @@ auditbeat.modules:
     -a exit,always -F arch=b64 -F euid>=1000 -S execve -k useract
     -a exit,always -F arch=b32 -F euid>=1000 -S execve -k useract
 
-    ## Drop all msgtype excluding msgtype=SYSCALL
+    ## Drop all msgtype excluding msgtype=SYSCALL, USER_LOGIN, USER_AUTH, USER_END, USER_START
     -a exclude,always -F msgtype=SERVICE_START
     -a exclude,always -F msgtype=SERVICE_STOP
     -a exclude,always -F msgtype=CONFIG_CHANGE
-    -a exclude,always -F msgtype=USER_LOGIN
-    -a exclude,always -F msgtype=USER_AUTH
-    -a exclude,always -F msgtype=USER_END
-    -a exclude,always -F msgtype=USER_START
     -a exclude,always -F msgtype=USER_ACCT
     -a exclude,always -F msgtype=USER_CMD
     -a exclude,always -F msgtype=USER_ERR
