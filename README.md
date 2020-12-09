@@ -1,5 +1,5 @@
-![Ansible Lint](https://github.com/tenantcloud/ansible-role-auditbeat/workflows/Ansible%20Lint/badge.svg?branch-master)
-![Yaml Lint](https://github.com/tenantcloud/ansible-role-auditbeat/workflows/Yaml%20Lint/badge.svg?branch-master)
+
+![Lint Ansible Playbook](https://github.com/tenantcloud/ansible-role-auditbeat/workflows/Lint%20Ansible%20Playbook/badge.svg)
 
 tenantcloud.auditbeat
 =========
