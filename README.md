@@ -1,5 +1,5 @@
 
-![Lint Ansible Playbook](https://github.com/tenantcloud/ansible-role-auditbeat/workflows/Lint%20Ansible%20Playbook/badge.svg)
+![Lint Ansible Roles](https://github.com/tenantcloud/ansible-role-auditbeat/workflows/Lint%20Ansible%20Roles/badge.svg)
 
 tenantcloud.auditbeat
 =========
